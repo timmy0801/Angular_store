@@ -1,0 +1,76 @@
+<mat-card *ngIf="cart.items.length" class="max-w-7xl mx-auto">
+    <table mat-table [dataSource]='dataSource' class="mat-elevetation-z8 w-full">
+
+        <ng-container matColumnDef="product">
+            <th mat-header-cell *matHeaderCellDef>商品</th>
+            <td mat-cell *matCellDef="let element">
+                <img src="{{element.product}}" class="w-[100px] my-5"/>
+            </td>
+            <td mat-footer-cell *matFooterCellDef>
+                <button mat-raised-button routerLink="/home">繼續購物</button>
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef>名稱</th>
+            <td mat-cell *matCellDef="let element">
+                <span class="truncate max-w-xs block">{{element.name}}</span>
+            </td>
+            <td mat-footer-cell *matFooterCellDef></td>
+        </ng-container>
+
+
+        <ng-container matColumnDef="price">
+            <th mat-header-cell *matHeaderCellDef>價格</th>
+            <td mat-cell *matCellDef="let element">
+                {{element.price |currency}}
+            </td>
+            <td mat-footer-cell *matFooterCellDef></td>
+        </ng-container>
+
+        <ng-container matColumnDef="quantity">
+            <th mat-header-cell *matHeaderCellDef>數量</th>
+            <td mat-cell *matCellDef="let element">
+                <button mat-icon-button><mat-icon>remove</mat-icon></button>
+                <span>{{element.quantity}}</span>
+                <button mat-icon-button><mat-icon>add</mat-icon></button>
+            </td>
+            <td mat-footer-cell *matFooterCellDef></td>
+        </ng-container>
+
+        <ng-container matColumnDef="total">
+            <th mat-header-cell *matHeaderCellDef>總共</th>
+            <td mat-cell *matCellDef="let element">
+                {{element.quantity * element.price |currency}}
+            </td>
+            <td mat-footer-cell *matFooterCellDef>
+                <span class="font-bold py-5 block">{{getTotal(cart.items) |currency}}</span>
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="action">
+            <th mat-header-cell *matHeaderCellDef>
+                <button mat-raised-button color="warn" class="float-right">清除全部</button>
+            </th>
+            <td mat-cell *matCellDef>
+                <button mat-mini-fab color="warn" class="float-right">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </td>
+            <td mat-footer-cell *matFooterCellDef>
+                <button mat-raised-button color="primary" class="float-right">
+                    去結帳
+                </button>
+            </td>
+        </ng-container>
+
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row;columns:displayedColumns"></tr>
+        <tr mat-footer-row *matFooterRowDef="displayedColumns"></tr>
+    </table>
+</mat-card>
+<mat-card *ngIf="!cart.items.length" class="max-w-7xl mx-anto">
+    <p>購物車是空的</p>
+    <button mat-raised-button routerLink="/home">購物去</button>
+</mat-card>
